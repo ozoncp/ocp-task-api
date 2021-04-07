@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+
+package ocp.task.api;
+
+option go_package = "gihtub.com/ozoncp/ocp-task-api/pkg/ocp-task-api;oct_task_api";
+
+// Описание задачи
+
+service OcpTaskApi {
+    // Возвращает описание задачи по ее идентификатору
+  rpc DescribeTask(DescribeTaskRequest) returns (DescribeTaskResponse) {
+      option (google.api.http) = {
+          get: "/tasks/{task_id}"
+      };
+  }
+}
+
+message DescribeTaskRequest {
+		uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message DescribeTaskResponse {
+	Task task = 1;
+}
+
+enum TaskDificulty {
+    Beginner = 0;
+    Easy = 1;
+    Normal = 2;
+    Hard = 3;
+}
+
+// Описание задачи
+message Task {
+    uint64 task_id = 1;
+    string description = 2;
+    TaskDificulty dificulty = 3;
+}
