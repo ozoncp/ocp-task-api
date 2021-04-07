@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: []
+  pull_request:
+    branches: ["!master"]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: prepare environment
+        run:  sudo apt install git &&
+              git submodule update --init
+
+      - name: build
+        run:
+          docker build -t ocp-task-api .

@@ -26,3 +26,5 @@ WORKDIR /home/developer
 
 COPY . /home/developer/go/src/github.com/ozoncp/ocp-task-api
 RUN echo developer | sudo -S chown -R developer /home/developer/
+
+RUN go build ~/go/src/github.com/ozoncp/ocp-task-api/cmd/grpc-server/main.go -o ~/go/bin/ocp-task-api

@@ -26,8 +26,12 @@ type server struct {
 
 func (s *server) DescribeTask(
 	ctx context.Context,
-	in *api.DescribeTaskRequest,
+	req *api.DescribeTaskRequest,
 ) (*api.DescribeTaskResponse, error) {
+
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
 
 	err := status.Error(codes.NotFound, errTaskNotFound)
 	return nil, err
