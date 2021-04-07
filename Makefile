@@ -9,7 +9,7 @@ PHONY: .generate
 		--go-grpc_out=pkg/ocp-task-api --go-grpc_opt=paths=import \
 		--grpc-gateway_out=pkg/ocp-task-api \
 		--grpc-gateway_opt=logtostderr=true \
-    --grpc-gateway_opt=paths=import \
+		--grpc-gateway_opt=paths=import \
 		--validate_out lang=go:pkg/ocp-task-api \
 		api/ocp-task-api/ocp-task-api.proto
 	mv pkg/ocp-task-api/gihtub.com/ozoncp/ocp-task-api/pkg/ocp-task-api/* pkg/ocp-task-api/
