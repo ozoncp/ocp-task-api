@@ -19,7 +19,7 @@ PHONY: .generate
 
 PHONY: .build
 .build:
-		CGO_ENABLED=0 GOOS=linux go build -o bin/ocp-task-api cmd/grpc-server/main.go
+		CGO_ENABLED=0 GOOS=linux go build -o bin/ocp-task-api cmd/ocp-task-api/main.go
 
 PHONY: install
 install: build .install

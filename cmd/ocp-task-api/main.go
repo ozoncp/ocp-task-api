@@ -5,7 +5,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"mime"
 	"net"
 	"net/http"
 	"path"
@@ -42,19 +41,6 @@ func serveSwagger(w http.ResponseWriter, r *http.Request) {
 	p := strings.TrimPrefix(r.URL.Path, "/swagger/")
 	p = path.Join(*swaggerDir, p)
 	http.ServeFile(w, r, p)
-}
-
-func serveSwagger(mux *http.ServeMux) {
-	mime.AddExtensionType(".svg", "image/svg+xml")
-
-	// Expose files in third_party/swagger-ui/ on <host>/swagger-ui
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    swagger.Asset,
-		AssetDir: swagger.AssetDir,
-		Prefix:   "third_party/swagger-ui",
-	})
-	prefix := "/swagger-ui/"
-	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
 }
 
 func runHttp() error {
