@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu AS builder
 
 RUN apt update -y
 RUN apt upgrade -y
@@ -22,9 +22,17 @@ RUN echo developer | sudo -S apt install -y make git vim protobuf-compiler
 ENV GOPATH /home/developer/go
 ENV PATH $PATH:/home/developer/go/bin
 
-WORKDIR /home/developer
-
 COPY . /home/developer/go/src/github.com/ozoncp/ocp-task-api
 RUN echo developer | sudo -S chown -R developer /home/developer/
 
-RUN go build ~/go/src/github.com/ozoncp/ocp-task-api/cmd/grpc-server/main.go -o ~/go/bin/ocp-task-api
+WORKDIR /home/developer/go/src/github.com/ozoncp/ocp-task-api
+
+RUN make deps && make build
+
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /home/developer/go/src/github.com/ozoncp/ocp-task-api/bin/ocp-task-api .
+RUN chown root:root ocp-task-api
+EXPOSE 82
+CMD ["./ocp-task-api"]

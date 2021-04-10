@@ -18,8 +18,8 @@ const (
 )
 
 var (
-	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:50551", "gRPC server endpoint")
-	restServerEndpoint = "0.0.0.0:8080"
+	grpcServerEndpoint = flag.String("grpc-server-endpoint", "localhost:82", "gRPC server endpoint")
+	restServerEndpoint = "0.0.0.0:80"
 )
 
 func run() error {

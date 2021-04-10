@@ -1,41 +1,18 @@
 package main
 
 import (
-	"context"
-	"flag"
 	"log"
 	"net"
 
-	"github.com/golang/glog"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 
-	api "github.com/ozoncp/ocp-task-api/pkg/ocp-task-api"
+	api "github.com/ozoncp/ocp-task-api/internal/api"
+	desc "github.com/ozoncp/ocp-task-api/pkg/ocp-task-api"
 )
 
 const (
-	errTaskNotFound = "task not found"
-
-	grpcPort = ":50551"
+	grpcPort = ":82"
 )
-
-type server struct {
-	api.UnimplementedOcpTaskApiServer
-}
-
-func (s *server) DescribeTask(
-	ctx context.Context,
-	req *api.DescribeTaskRequest,
-) (*api.DescribeTaskResponse, error) {
-
-	if err := req.Validate(); err != nil {
-		return nil, status.Error(codes.InvalidArgument, err.Error())
-	}
-
-	err := status.Error(codes.NotFound, errTaskNotFound)
-	return nil, err
-}
 
 func run() error {
 	listen, err := net.Listen("tcp", grpcPort)
@@ -44,7 +21,7 @@ func run() error {
 	}
 
 	s := grpc.NewServer()
-	api.RegisterOcpTaskApiServer(s, &server{})
+	desc.RegisterOcpTaskApiServer(s, api.NewOcpTaskApi())
 
 	if err := s.Serve(listen); err != nil {
 		log.Fatalf("failed to serve: %v", err)
@@ -54,10 +31,7 @@ func run() error {
 }
 
 func main() {
-	flag.Parse()
-	defer glog.Flush()
-
 	if err := run(); err != nil {
-		glog.Fatal(err)
+		log.Fatal(err)
 	}
 }

@@ -1,0 +1,116 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/ocp-task-api/ocp-task-api.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/tasks/{task_id}": {
+      "get": {
+        "summary": "Возвращает описание задачи по ее идентификатору",
+        "operationId": "OcpTaskApi_DescribeTask",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiDescribeTaskResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpTaskApi"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiDescribeTaskResponse": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "$ref": "#/definitions/apiTask"
+        }
+      }
+    },
+    "apiTask": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "description": {
+          "type": "string"
+        },
+        "dificulty": {
+          "$ref": "#/definitions/apiTaskDificulty"
+        }
+      },
+      "title": "Описание задачи"
+    },
+    "apiTaskDificulty": {
+      "type": "string",
+      "enum": [
+        "Beginner",
+        "Easy",
+        "Normal",
+        "Hard"
+      ],
+      "default": "Beginner"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
