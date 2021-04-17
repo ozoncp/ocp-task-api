@@ -17,10 +17,10 @@ type api struct {
 	desc.UnimplementedOcpTaskApiServer
 }
 
-func (a *api) DescribeTask(
+func (a *api) DescribeTaskV1(
 	ctx context.Context,
-	req *desc.DescribeTaskRequest,
-) (*desc.DescribeTaskResponse, error) {
+	req *desc.DescribeTaskV1Request,
+) (*desc.DescribeTaskV1Response, error) {
 
 	if err := req.Validate(); err != nil {
 		return nil, status.Error(codes.InvalidArgument, err.Error())

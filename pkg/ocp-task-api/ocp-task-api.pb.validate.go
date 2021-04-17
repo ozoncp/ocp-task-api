@@ -33,27 +33,24 @@ var (
 	_ = ptypes.DynamicAny{}
 )
 
-// Validate checks the field values on DescribeTaskRequest with the rules
+// Validate checks the field values on ListTasksV1Request with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DescribeTaskRequest) Validate() error {
+func (m *ListTasksV1Request) Validate() error {
 	if m == nil {
 		return nil
 	}
 
-	if m.GetTaskId() <= 0 {
-		return DescribeTaskRequestValidationError{
-			field:  "TaskId",
-			reason: "value must be greater than 0",
-		}
-	}
+	// no validation rules for Limit
+
+	// no validation rules for Offset
 
 	return nil
 }
 
-// DescribeTaskRequestValidationError is the validation error returned by
-// DescribeTaskRequest.Validate if the designated constraints aren't met.
-type DescribeTaskRequestValidationError struct {
+// ListTasksV1RequestValidationError is the validation error returned by
+// ListTasksV1Request.Validate if the designated constraints aren't met.
+type ListTasksV1RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -61,24 +58,24 @@ type DescribeTaskRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribeTaskRequestValidationError) Field() string { return e.field }
+func (e ListTasksV1RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribeTaskRequestValidationError) Reason() string { return e.reason }
+func (e ListTasksV1RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribeTaskRequestValidationError) Cause() error { return e.cause }
+func (e ListTasksV1RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribeTaskRequestValidationError) Key() bool { return e.key }
+func (e ListTasksV1RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribeTaskRequestValidationError) ErrorName() string {
-	return "DescribeTaskRequestValidationError"
+func (e ListTasksV1RequestValidationError) ErrorName() string {
+	return "ListTasksV1RequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribeTaskRequestValidationError) Error() string {
+func (e ListTasksV1RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -90,14 +87,14 @@ func (e DescribeTaskRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribeTaskRequest.%s: %s%s",
+		"invalid %sListTasksV1Request.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribeTaskRequestValidationError{}
+var _ error = ListTasksV1RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -105,19 +102,448 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribeTaskRequestValidationError{}
+} = ListTasksV1RequestValidationError{}
 
-// Validate checks the field values on DescribeTaskResponse with the rules
+// Validate checks the field values on ListTasksV1Response with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
-func (m *DescribeTaskResponse) Validate() error {
+func (m *ListTasksV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetTasks() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListTasksV1ResponseValidationError{
+					field:  fmt.Sprintf("Tasks[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListTasksV1ResponseValidationError is the validation error returned by
+// ListTasksV1Response.Validate if the designated constraints aren't met.
+type ListTasksV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListTasksV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListTasksV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListTasksV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListTasksV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListTasksV1ResponseValidationError) ErrorName() string {
+	return "ListTasksV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ListTasksV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListTasksV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListTasksV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListTasksV1ResponseValidationError{}
+
+// Validate checks the field values on CreateTaskV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateTaskV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Description
+
+	// no validation rules for Dificulty
+
+	return nil
+}
+
+// CreateTaskV1RequestValidationError is the validation error returned by
+// CreateTaskV1Request.Validate if the designated constraints aren't met.
+type CreateTaskV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateTaskV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateTaskV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateTaskV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateTaskV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateTaskV1RequestValidationError) ErrorName() string {
+	return "CreateTaskV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateTaskV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateTaskV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateTaskV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateTaskV1RequestValidationError{}
+
+// Validate checks the field values on CreateTaskV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *CreateTaskV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for TaskId
+
+	return nil
+}
+
+// CreateTaskV1ResponseValidationError is the validation error returned by
+// CreateTaskV1Response.Validate if the designated constraints aren't met.
+type CreateTaskV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreateTaskV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreateTaskV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreateTaskV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreateTaskV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreateTaskV1ResponseValidationError) ErrorName() string {
+	return "CreateTaskV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreateTaskV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreateTaskV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreateTaskV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreateTaskV1ResponseValidationError{}
+
+// Validate checks the field values on RemoveTaskV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveTaskV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for TaskId
+
+	return nil
+}
+
+// RemoveTaskV1RequestValidationError is the validation error returned by
+// RemoveTaskV1Request.Validate if the designated constraints aren't met.
+type RemoveTaskV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveTaskV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveTaskV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveTaskV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveTaskV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveTaskV1RequestValidationError) ErrorName() string {
+	return "RemoveTaskV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveTaskV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveTaskV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveTaskV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveTaskV1RequestValidationError{}
+
+// Validate checks the field values on RemoveTaskV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *RemoveTaskV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Found
+
+	return nil
+}
+
+// RemoveTaskV1ResponseValidationError is the validation error returned by
+// RemoveTaskV1Response.Validate if the designated constraints aren't met.
+type RemoveTaskV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveTaskV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveTaskV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveTaskV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveTaskV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveTaskV1ResponseValidationError) ErrorName() string {
+	return "RemoveTaskV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RemoveTaskV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveTaskV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveTaskV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveTaskV1ResponseValidationError{}
+
+// Validate checks the field values on DescribeTaskV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DescribeTaskV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for TaskId
+
+	return nil
+}
+
+// DescribeTaskV1RequestValidationError is the validation error returned by
+// DescribeTaskV1Request.Validate if the designated constraints aren't met.
+type DescribeTaskV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DescribeTaskV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DescribeTaskV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DescribeTaskV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DescribeTaskV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DescribeTaskV1RequestValidationError) ErrorName() string {
+	return "DescribeTaskV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DescribeTaskV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDescribeTaskV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DescribeTaskV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DescribeTaskV1RequestValidationError{}
+
+// Validate checks the field values on DescribeTaskV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DescribeTaskV1Response) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if v, ok := interface{}(m.GetTask()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DescribeTaskResponseValidationError{
+			return DescribeTaskV1ResponseValidationError{
 				field:  "Task",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -128,9 +554,9 @@ func (m *DescribeTaskResponse) Validate() error {
 	return nil
 }
 
-// DescribeTaskResponseValidationError is the validation error returned by
-// DescribeTaskResponse.Validate if the designated constraints aren't met.
-type DescribeTaskResponseValidationError struct {
+// DescribeTaskV1ResponseValidationError is the validation error returned by
+// DescribeTaskV1Response.Validate if the designated constraints aren't met.
+type DescribeTaskV1ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -138,24 +564,24 @@ type DescribeTaskResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e DescribeTaskResponseValidationError) Field() string { return e.field }
+func (e DescribeTaskV1ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DescribeTaskResponseValidationError) Reason() string { return e.reason }
+func (e DescribeTaskV1ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DescribeTaskResponseValidationError) Cause() error { return e.cause }
+func (e DescribeTaskV1ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DescribeTaskResponseValidationError) Key() bool { return e.key }
+func (e DescribeTaskV1ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DescribeTaskResponseValidationError) ErrorName() string {
-	return "DescribeTaskResponseValidationError"
+func (e DescribeTaskV1ResponseValidationError) ErrorName() string {
+	return "DescribeTaskV1ResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e DescribeTaskResponseValidationError) Error() string {
+func (e DescribeTaskV1ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -167,14 +593,14 @@ func (e DescribeTaskResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDescribeTaskResponse.%s: %s%s",
+		"invalid %sDescribeTaskV1Response.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DescribeTaskResponseValidationError{}
+var _ error = DescribeTaskV1ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -182,7 +608,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DescribeTaskResponseValidationError{}
+} = DescribeTaskV1ResponseValidationError{}
 
 // Validate checks the field values on Task with the rules defined in the proto
 // definition for this message. If any rules are violated, an error is returned.

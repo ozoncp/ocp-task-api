@@ -10,20 +10,68 @@ option go_package = "gihtub.com/ozoncp/ocp-task-api/pkg/ocp-task-api;oct_task_ap
 // Описание задачи
 
 service OcpTaskApi {
+
+    // Возвращает список задач
+    rpc ListTasksV1(ListTasksV1Request) returns (ListTasksV1Response) {
+        option (google.api.http) = {
+            get: "/v1/tasks"
+        };
+    }
+
     // Возвращает описание задачи по ее идентификатору
-  rpc DescribeTask(DescribeTaskRequest) returns (DescribeTaskResponse) {
-      option (google.api.http) = {
-          get: "/tasks/{task_id}"
-      };
-  }
+    rpc DescribeTaskV1(DescribeTaskV1Request) returns (DescribeTaskV1Response) {
+        option (google.api.http) = {
+            get: "/v1/tasks/{task_id}"
+        };
+    }
+
+    // Создает новую задачу
+    rpc CreateTaskV1(CreateTaskV1Request) returns (CreateTaskV1Response) {
+        option (google.api.http) = {
+            post: "/v1/tasks"
+        };
+    }
+
+    // Удаляет задачу по идентификатору
+    rpc RemoveTaskV1(RemoveTaskV1Request) returns (RemoveTaskV1Response) {
+        option (google.api.http) = {
+            delete: "/v1/tasks/{task_id}"
+        };
+    }
 }
 
-message DescribeTaskRequest {
+message ListTasksV1Request {
+    uint64 limit = 1;
+    uint64 offset = 2;
+}
+
+message ListTasksV1Response {
+    repeated Task tasks = 1;
+}
+
+message CreateTaskV1Request {
+    string description = 2;
+    TaskDificulty dificulty = 3;
+}
+
+message CreateTaskV1Response {
+    uint64 task_id = 1;
+}
+
+message RemoveTaskV1Request {
 		uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
-message DescribeTaskResponse {
-	Task task = 1;
+message RemoveTaskV1Response {
+    bool found = 1;
+}
+
+message DescribeTaskV1Request {
+		uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
+}
+
+message DescribeTaskV1Response {
+    Task task = 1;
 }
 
 enum TaskDificulty {

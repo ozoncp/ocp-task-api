@@ -11,15 +11,105 @@
     "application/json"
   ],
   "paths": {
-    "/tasks/{task_id}": {
+    "/v1/tasks": {
       "get": {
-        "summary": "Возвращает описание задачи по ее идентификатору",
-        "operationId": "OcpTaskApi_DescribeTask",
+        "summary": "Возвращает список задач",
+        "operationId": "OcpTaskApi_ListTasksV1",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/apiDescribeTaskResponse"
+              "$ref": "#/definitions/apiListTasksV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpTaskApi"
+        ]
+      },
+      "post": {
+        "summary": "Создает новую задачу",
+        "operationId": "OcpTaskApi_CreateTaskV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiCreateTaskV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "tags": [
+          "OcpTaskApi"
+        ]
+      }
+    },
+    "/v1/tasks/{task_id}": {
+      "get": {
+        "summary": "Возвращает описание задачи по ее идентификатору",
+        "operationId": "OcpTaskApi_DescribeTaskV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiDescribeTaskV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpTaskApi"
+        ]
+      },
+      "delete": {
+        "summary": "Удаляет задачу по идентификатору",
+        "operationId": "OcpTaskApi_RemoveTaskV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiRemoveTaskV1Response"
             }
           },
           "default": {
@@ -45,11 +135,39 @@
     }
   },
   "definitions": {
-    "apiDescribeTaskResponse": {
+    "apiCreateTaskV1Response": {
+      "type": "object",
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "apiDescribeTaskV1Response": {
       "type": "object",
       "properties": {
         "task": {
           "$ref": "#/definitions/apiTask"
+        }
+      }
+    },
+    "apiListTasksV1Response": {
+      "type": "object",
+      "properties": {
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiTask"
+          }
+        }
+      }
+    },
+    "apiRemoveTaskV1Response": {
+      "type": "object",
+      "properties": {
+        "found": {
+          "type": "boolean"
         }
       }
     },

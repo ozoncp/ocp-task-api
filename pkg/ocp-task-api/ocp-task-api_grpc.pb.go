@@ -18,8 +18,14 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OcpTaskApiClient interface {
+	// Возвращает список задач
+	ListTasksV1(ctx context.Context, in *ListTasksV1Request, opts ...grpc.CallOption) (*ListTasksV1Response, error)
 	// Возвращает описание задачи по ее идентификатору
-	DescribeTask(ctx context.Context, in *DescribeTaskRequest, opts ...grpc.CallOption) (*DescribeTaskResponse, error)
+	DescribeTaskV1(ctx context.Context, in *DescribeTaskV1Request, opts ...grpc.CallOption) (*DescribeTaskV1Response, error)
+	// Создает новую задачу
+	CreateTaskV1(ctx context.Context, in *CreateTaskV1Request, opts ...grpc.CallOption) (*CreateTaskV1Response, error)
+	// Удаляет задачу по идентификатору
+	RemoveTaskV1(ctx context.Context, in *RemoveTaskV1Request, opts ...grpc.CallOption) (*RemoveTaskV1Response, error)
 }
 
 type ocpTaskApiClient struct {
@@ -30,9 +36,36 @@ func NewOcpTaskApiClient(cc grpc.ClientConnInterface) OcpTaskApiClient {
 	return &ocpTaskApiClient{cc}
 }
 
-func (c *ocpTaskApiClient) DescribeTask(ctx context.Context, in *DescribeTaskRequest, opts ...grpc.CallOption) (*DescribeTaskResponse, error) {
-	out := new(DescribeTaskResponse)
-	err := c.cc.Invoke(ctx, "/ocp.task.api.OcpTaskApi/DescribeTask", in, out, opts...)
+func (c *ocpTaskApiClient) ListTasksV1(ctx context.Context, in *ListTasksV1Request, opts ...grpc.CallOption) (*ListTasksV1Response, error) {
+	out := new(ListTasksV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.task.api.OcpTaskApi/ListTasksV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpTaskApiClient) DescribeTaskV1(ctx context.Context, in *DescribeTaskV1Request, opts ...grpc.CallOption) (*DescribeTaskV1Response, error) {
+	out := new(DescribeTaskV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.task.api.OcpTaskApi/DescribeTaskV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpTaskApiClient) CreateTaskV1(ctx context.Context, in *CreateTaskV1Request, opts ...grpc.CallOption) (*CreateTaskV1Response, error) {
+	out := new(CreateTaskV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.task.api.OcpTaskApi/CreateTaskV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpTaskApiClient) RemoveTaskV1(ctx context.Context, in *RemoveTaskV1Request, opts ...grpc.CallOption) (*RemoveTaskV1Response, error) {
+	out := new(RemoveTaskV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.task.api.OcpTaskApi/RemoveTaskV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +76,14 @@ func (c *ocpTaskApiClient) DescribeTask(ctx context.Context, in *DescribeTaskReq
 // All implementations must embed UnimplementedOcpTaskApiServer
 // for forward compatibility
 type OcpTaskApiServer interface {
+	// Возвращает список задач
+	ListTasksV1(context.Context, *ListTasksV1Request) (*ListTasksV1Response, error)
 	// Возвращает описание задачи по ее идентификатору
-	DescribeTask(context.Context, *DescribeTaskRequest) (*DescribeTaskResponse, error)
+	DescribeTaskV1(context.Context, *DescribeTaskV1Request) (*DescribeTaskV1Response, error)
+	// Создает новую задачу
+	CreateTaskV1(context.Context, *CreateTaskV1Request) (*CreateTaskV1Response, error)
+	// Удаляет задачу по идентификатору
+	RemoveTaskV1(context.Context, *RemoveTaskV1Request) (*RemoveTaskV1Response, error)
 	mustEmbedUnimplementedOcpTaskApiServer()
 }
 
@@ -52,8 +91,17 @@ type OcpTaskApiServer interface {
 type UnimplementedOcpTaskApiServer struct {
 }
 
-func (UnimplementedOcpTaskApiServer) DescribeTask(context.Context, *DescribeTaskRequest) (*DescribeTaskResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DescribeTask not implemented")
+func (UnimplementedOcpTaskApiServer) ListTasksV1(context.Context, *ListTasksV1Request) (*ListTasksV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListTasksV1 not implemented")
+}
+func (UnimplementedOcpTaskApiServer) DescribeTaskV1(context.Context, *DescribeTaskV1Request) (*DescribeTaskV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeTaskV1 not implemented")
+}
+func (UnimplementedOcpTaskApiServer) CreateTaskV1(context.Context, *CreateTaskV1Request) (*CreateTaskV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateTaskV1 not implemented")
+}
+func (UnimplementedOcpTaskApiServer) RemoveTaskV1(context.Context, *RemoveTaskV1Request) (*RemoveTaskV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveTaskV1 not implemented")
 }
 func (UnimplementedOcpTaskApiServer) mustEmbedUnimplementedOcpTaskApiServer() {}
 
@@ -68,20 +116,74 @@ func RegisterOcpTaskApiServer(s grpc.ServiceRegistrar, srv OcpTaskApiServer) {
 	s.RegisterService(&OcpTaskApi_ServiceDesc, srv)
 }
 
-func _OcpTaskApi_DescribeTask_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DescribeTaskRequest)
+func _OcpTaskApi_ListTasksV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTasksV1Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OcpTaskApiServer).DescribeTask(ctx, in)
+		return srv.(OcpTaskApiServer).ListTasksV1(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ocp.task.api.OcpTaskApi/DescribeTask",
+		FullMethod: "/ocp.task.api.OcpTaskApi/ListTasksV1",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OcpTaskApiServer).DescribeTask(ctx, req.(*DescribeTaskRequest))
+		return srv.(OcpTaskApiServer).ListTasksV1(ctx, req.(*ListTasksV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpTaskApi_DescribeTaskV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeTaskV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpTaskApiServer).DescribeTaskV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp.task.api.OcpTaskApi/DescribeTaskV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpTaskApiServer).DescribeTaskV1(ctx, req.(*DescribeTaskV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpTaskApi_CreateTaskV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTaskV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpTaskApiServer).CreateTaskV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp.task.api.OcpTaskApi/CreateTaskV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpTaskApiServer).CreateTaskV1(ctx, req.(*CreateTaskV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpTaskApi_RemoveTaskV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveTaskV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpTaskApiServer).RemoveTaskV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp.task.api.OcpTaskApi/RemoveTaskV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpTaskApiServer).RemoveTaskV1(ctx, req.(*RemoveTaskV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -94,8 +196,20 @@ var OcpTaskApi_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*OcpTaskApiServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "DescribeTask",
-			Handler:    _OcpTaskApi_DescribeTask_Handler,
+			MethodName: "ListTasksV1",
+			Handler:    _OcpTaskApi_ListTasksV1_Handler,
+		},
+		{
+			MethodName: "DescribeTaskV1",
+			Handler:    _OcpTaskApi_DescribeTaskV1_Handler,
+		},
+		{
+			MethodName: "CreateTaskV1",
+			Handler:    _OcpTaskApi_CreateTaskV1_Handler,
+		},
+		{
+			MethodName: "RemoveTaskV1",
+			Handler:    _OcpTaskApi_RemoveTaskV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
