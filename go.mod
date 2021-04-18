@@ -3,6 +3,7 @@ module github.com/ozoncp/ocp-task-api
 go 1.15
 
 require (
+	github.com/Masterminds/squirrel v1.5.0 // indirect
 	github.com/gogo/status v1.1.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/mock v1.5.0
