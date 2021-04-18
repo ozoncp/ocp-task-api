@@ -11,6 +11,7 @@ import (
 type Saver interface {
 	Init(ctx context.Context)
 	Save(ctx context.Context, task models.Task) error
+	Close()
 }
 
 // NewSaver возвращает Saver с поддержкой переодического сохранения
@@ -21,9 +22,11 @@ func NewSaver(
 ) Saver {
 
 	tasks := make(chan models.Task, capacity)
+	done := make(chan struct{})
 
 	return &saver{
 		tasks:   tasks,
+		done:    done,
 		alarm:   alarm,
 		flusher: flusher,
 	}
@@ -31,6 +34,7 @@ func NewSaver(
 
 type saver struct {
 	tasks   chan models.Task
+	done    chan struct{}
 	alarm   time.Alarm
 	flusher flusher.Flusher
 }
@@ -48,17 +52,24 @@ func (s *saver) flushing(ctx context.Context) {
 
 	var tasks []models.Task
 
+	alarms := s.alarm.Alarm()
+
 	for {
 		select {
 		case task := <-s.tasks:
 			tasks = append(tasks, task)
 
 		case <-ctx.Done():
-			tasks = s.flusher.Flush(ctx, tasks)
+			_ = s.flusher.Flush(ctx, tasks)
+			s.done <- struct{}{}
 			return
 
-		case <-s.alarm.Alarm():
+		case <-alarms:
 			tasks = s.flusher.Flush(ctx, tasks)
 		}
 	}
+}
+
+func (s *saver) Close() {
+	<-s.done
 }

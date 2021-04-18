@@ -6,35 +6,36 @@ package mocks
 
 import (
 	context "context"
+	reflect "reflect"
+
 	gomock "github.com/golang/mock/gomock"
 	models "github.com/ozoncp/ocp-task-api/internal/models"
-	reflect "reflect"
 )
 
-// MockRepo is a mock of Repo interface
+// MockRepo is a mock of Repo interface.
 type MockRepo struct {
 	ctrl     *gomock.Controller
 	recorder *MockRepoMockRecorder
 }
 
-// MockRepoMockRecorder is the mock recorder for MockRepo
+// MockRepoMockRecorder is the mock recorder for MockRepo.
 type MockRepoMockRecorder struct {
 	mock *MockRepo
 }
 
-// NewMockRepo creates a new mock instance
+// NewMockRepo creates a new mock instance.
 func NewMockRepo(ctrl *gomock.Controller) *MockRepo {
 	mock := &MockRepo{ctrl: ctrl}
 	mock.recorder = &MockRepoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockRepo) EXPECT() *MockRepoMockRecorder {
 	return m.recorder
 }
 
-// AddTask mocks base method
+// AddTask mocks base method.
 func (m *MockRepo) AddTask(arg0 context.Context, arg1 models.Task) (uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddTask", arg0, arg1)
@@ -43,13 +44,13 @@ func (m *MockRepo) AddTask(arg0 context.Context, arg1 models.Task) (uint64, erro
 	return ret0, ret1
 }
 
-// AddTask indicates an expected call of AddTask
+// AddTask indicates an expected call of AddTask.
 func (mr *MockRepoMockRecorder) AddTask(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTask", reflect.TypeOf((*MockRepo)(nil).AddTask), arg0, arg1)
 }
 
-// AddTasks mocks base method
+// AddTasks mocks base method.
 func (m *MockRepo) AddTasks(arg0 context.Context, arg1 []models.Task) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddTasks", arg0, arg1)
@@ -57,13 +58,13 @@ func (m *MockRepo) AddTasks(arg0 context.Context, arg1 []models.Task) error {
 	return ret0
 }
 
-// AddTasks indicates an expected call of AddTasks
+// AddTasks indicates an expected call of AddTasks.
 func (mr *MockRepoMockRecorder) AddTasks(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddTasks", reflect.TypeOf((*MockRepo)(nil).AddTasks), arg0, arg1)
 }
 
-// DescribeTask mocks base method
+// DescribeTask mocks base method.
 func (m *MockRepo) DescribeTask(arg0 uint64) (*models.Task, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DescribeTask", arg0)
@@ -72,13 +73,13 @@ func (m *MockRepo) DescribeTask(arg0 uint64) (*models.Task, error) {
 	return ret0, ret1
 }
 
-// DescribeTask indicates an expected call of DescribeTask
+// DescribeTask indicates an expected call of DescribeTask.
 func (mr *MockRepoMockRecorder) DescribeTask(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeTask", reflect.TypeOf((*MockRepo)(nil).DescribeTask), arg0)
 }
 
-// RemoveTask mocks base method
+// RemoveTask mocks base method.
 func (m *MockRepo) RemoveTask(arg0 uint64) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RemoveTask", arg0)
@@ -86,7 +87,7 @@ func (m *MockRepo) RemoveTask(arg0 uint64) error {
 	return ret0
 }
 
-// RemoveTask indicates an expected call of RemoveTask
+// RemoveTask indicates an expected call of RemoveTask.
 func (mr *MockRepoMockRecorder) RemoveTask(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveTask", reflect.TypeOf((*MockRepo)(nil).RemoveTask), arg0)

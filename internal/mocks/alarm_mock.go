@@ -5,34 +5,35 @@
 package mocks
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockAlarm is a mock of Alarm interface
+// MockAlarm is a mock of Alarm interface.
 type MockAlarm struct {
 	ctrl     *gomock.Controller
 	recorder *MockAlarmMockRecorder
 }
 
-// MockAlarmMockRecorder is the mock recorder for MockAlarm
+// MockAlarmMockRecorder is the mock recorder for MockAlarm.
 type MockAlarmMockRecorder struct {
 	mock *MockAlarm
 }
 
-// NewMockAlarm creates a new mock instance
+// NewMockAlarm creates a new mock instance.
 func NewMockAlarm(ctrl *gomock.Controller) *MockAlarm {
 	mock := &MockAlarm{ctrl: ctrl}
 	mock.recorder = &MockAlarmMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAlarm) EXPECT() *MockAlarmMockRecorder {
 	return m.recorder
 }
 
-// Alarm mocks base method
+// Alarm mocks base method.
 func (m *MockAlarm) Alarm() <-chan struct{} {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Alarm")
@@ -40,19 +41,19 @@ func (m *MockAlarm) Alarm() <-chan struct{} {
 	return ret0
 }
 
-// Alarm indicates an expected call of Alarm
+// Alarm indicates an expected call of Alarm.
 func (mr *MockAlarmMockRecorder) Alarm() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Alarm", reflect.TypeOf((*MockAlarm)(nil).Alarm))
 }
 
-// Init mocks base method
+// Init mocks base method.
 func (m *MockAlarm) Init() {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Init")
 }
 
-// Init indicates an expected call of Init
+// Init indicates an expected call of Init.
 func (mr *MockAlarmMockRecorder) Init() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockAlarm)(nil).Init))

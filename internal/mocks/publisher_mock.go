@@ -6,40 +6,41 @@ package mocks
 
 import (
 	context "context"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockPublisher is a mock of Publisher interface
+// MockPublisher is a mock of Publisher interface.
 type MockPublisher struct {
 	ctrl     *gomock.Controller
 	recorder *MockPublisherMockRecorder
 }
 
-// MockPublisherMockRecorder is the mock recorder for MockPublisher
+// MockPublisherMockRecorder is the mock recorder for MockPublisher.
 type MockPublisherMockRecorder struct {
 	mock *MockPublisher
 }
 
-// NewMockPublisher creates a new mock instance
+// NewMockPublisher creates a new mock instance.
 func NewMockPublisher(ctrl *gomock.Controller) *MockPublisher {
 	mock := &MockPublisher{ctrl: ctrl}
 	mock.recorder = &MockPublisherMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockPublisher) EXPECT() *MockPublisherMockRecorder {
 	return m.recorder
 }
 
-// PublishFlushing mocks base method
+// PublishFlushing mocks base method.
 func (m *MockPublisher) PublishFlushing(arg0 context.Context, arg1 int) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "PublishFlushing", arg0, arg1)
 }
 
-// PublishFlushing indicates an expected call of PublishFlushing
+// PublishFlushing indicates an expected call of PublishFlushing.
 func (mr *MockPublisherMockRecorder) PublishFlushing(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "PublishFlushing", reflect.TypeOf((*MockPublisher)(nil).PublishFlushing), arg0, arg1)
