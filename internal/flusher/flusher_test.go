@@ -76,7 +76,7 @@ var _ = Describe("Flusher", func() {
 			chunkSize = 2
 			tasks = []models.Task{{}, {}}
 
-			mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Any()).Return(errDeadlineExceeded)
+			mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Len(chunkSize)).Return(errDeadlineExceeded)
 			mockPublisher.EXPECT().PublishFlushing(gomock.Any(), gomock.Any()).Times(0)
 		})
 
@@ -97,9 +97,11 @@ var _ = Describe("Flusher", func() {
 			halfSize = int(len(tasks) / 2)
 			chunkSize = halfSize
 
-			mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Any()).Return(nil)
-			mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Any()).Return(errDeadlineExceeded)
-			mockPublisher.EXPECT().PublishFlushing(gomock.Any(), halfSize)
+			gomock.InOrder(
+				mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Len(chunkSize)).Return(nil),
+				mockPublisher.EXPECT().PublishFlushing(gomock.Any(), halfSize),
+				mockRepo.EXPECT().AddTasks(gomock.Any(), gomock.Any()).Return(errDeadlineExceeded),
+			)
 		})
 
 		It("", func() {

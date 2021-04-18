@@ -18,6 +18,7 @@ type Repo interface {
 	AddTasks(ctx context.Context, tasks []models.Task) error
 	RemoveTask(taskId uint64) error
 	DescribeTask(taskId uint64) (*models.Task, error)
+	ListTasks(limit, offset uint64) ([]models.Task, error)
 }
 
 func NewRepo(
@@ -46,5 +47,9 @@ func (r *repo) RemoveTask(taskId uint64) error {
 
 func (r *repo) DescribeTask(taskId uint64) (*models.Task, error) {
 
+	return nil, errUnimplemented
+}
+
+func (r *repo) ListTasks(limit, offset uint64) ([]models.Task, error) {
 	return nil, errUnimplemented
 }

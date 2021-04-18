@@ -79,6 +79,21 @@ func (mr *MockRepoMockRecorder) DescribeTask(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DescribeTask", reflect.TypeOf((*MockRepo)(nil).DescribeTask), arg0)
 }
 
+// ListTasks mocks base method.
+func (m *MockRepo) ListTasks(arg0, arg1 uint64) ([]models.Task, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListTasks", arg0, arg1)
+	ret0, _ := ret[0].([]models.Task)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListTasks indicates an expected call of ListTasks.
+func (mr *MockRepoMockRecorder) ListTasks(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListTasks", reflect.TypeOf((*MockRepo)(nil).ListTasks), arg0, arg1)
+}
+
 // RemoveTask mocks base method.
 func (m *MockRepo) RemoveTask(arg0 uint64) error {
 	m.ctrl.T.Helper()
