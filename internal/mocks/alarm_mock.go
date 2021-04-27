@@ -47,6 +47,18 @@ func (mr *MockAlarmMockRecorder) Alarm() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Alarm", reflect.TypeOf((*MockAlarm)(nil).Alarm))
 }
 
+// Close mocks base method.
+func (m *MockAlarm) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockAlarmMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockAlarm)(nil).Close))
+}
+
 // Init mocks base method.
 func (m *MockAlarm) Init() {
 	m.ctrl.T.Helper()

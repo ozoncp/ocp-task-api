@@ -8,6 +8,7 @@ import (
 type Alarm interface {
 	Alarm() <-chan struct{}
 	Init()
+	Close()
 }
 
 func NewAlarm(
@@ -16,13 +17,15 @@ func NewAlarm(
 	clock Clock,
 ) Alarm {
 
-	chanel := make(chan struct{})
+	alarms := make(chan struct{})
+	done := make(chan struct{})
 
 	return &alarm{
 		ctx:     ctx,
 		timeout: timeout,
 		clock:   clock,
-		chanel:  chanel,
+		alarms:  alarms,
+		done:    done,
 	}
 }
 
@@ -30,11 +33,12 @@ type alarm struct {
 	ctx     context.Context
 	timeout time.Duration
 	clock   Clock
-	chanel  chan struct{}
+	alarms  chan struct{}
+	done    chan struct{}
 }
 
 func (a *alarm) Alarm() <-chan struct{} {
-	return a.chanel
+	return a.alarms
 }
 
 func (a *alarm) Init() {
@@ -44,11 +48,17 @@ func (a *alarm) Init() {
 
 			select {
 			case <-timer:
-				a.chanel <- struct{}{}
+				a.alarms <- struct{}{}
+				timer = time.After(a.timeout)
 			case <-a.ctx.Done():
-				close(a.chanel)
+				close(a.alarms)
+				a.done <- struct{}{}
 				return
 			}
 		}
 	}()
+}
+
+func (a *alarm) Close() {
+	<-a.done
 }
