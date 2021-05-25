@@ -29,7 +29,7 @@ var _ = Describe("Saver", func() {
 		mockAlarm   *mocks.MockAlarm
 
 		task models.Task
-		s saver.Saver
+		s    saver.Saver
 
 		alarms chan struct{}
 	)
@@ -41,7 +41,7 @@ var _ = Describe("Saver", func() {
 		mockAlarm = mocks.NewMockAlarm(ctrl)
 		mockFlusher = mocks.NewMockFlusher(ctrl)
 
-		alarms = make (chan struct{})
+		alarms = make(chan struct{})
 		mockAlarm.EXPECT().Alarm().Return(alarms).AnyTimes()
 
 		s = saver.NewSaver(capacity, mockAlarm, mockFlusher)
