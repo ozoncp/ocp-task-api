@@ -196,7 +196,7 @@ func (m *CreateTaskV1Request) Validate() error {
 
 	// no validation rules for Description
 
-	// no validation rules for Dificulty
+	// no validation rules for Difficulty
 
 	return nil
 }
@@ -617,11 +617,11 @@ func (m *Task) Validate() error {
 		return nil
 	}
 
-	// no validation rules for TaskId
+	// no validation rules for Id
 
 	// no validation rules for Description
 
-	// no validation rules for Dificulty
+	// no validation rules for Difficulty
 
 	return nil
 }

@@ -51,7 +51,7 @@ message ListTasksV1Response {
 
 message CreateTaskV1Request {
     string description = 2;
-    TaskDificulty dificulty = 3;
+    TaskDifficulty difficulty = 3;
 }
 
 message CreateTaskV1Response {
@@ -74,7 +74,7 @@ message DescribeTaskV1Response {
     Task task = 1;
 }
 
-enum TaskDificulty {
+enum TaskDifficulty {
     Beginner = 0;
     Easy = 1;
     Normal = 2;
@@ -83,7 +83,7 @@ enum TaskDificulty {
 
 // Описание задачи
 message Task {
-    uint64 task_id = 1;
+    uint64 id = 1;
     string description = 2;
-    TaskDificulty dificulty = 3;
+    TaskDifficulty difficulty = 3;
 }

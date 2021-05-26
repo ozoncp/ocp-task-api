@@ -174,20 +174,20 @@
     "apiTask": {
       "type": "object",
       "properties": {
-        "task_id": {
+        "id": {
           "type": "string",
           "format": "uint64"
         },
         "description": {
           "type": "string"
         },
-        "dificulty": {
-          "$ref": "#/definitions/apiTaskDificulty"
+        "difficulty": {
+          "$ref": "#/definitions/apiTaskDifficulty"
         }
       },
       "title": "Описание задачи"
     },
-    "apiTaskDificulty": {
+    "apiTaskDifficulty": {
       "type": "string",
       "enum": [
         "Beginner",
