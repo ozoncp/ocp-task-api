@@ -2,6 +2,8 @@ package notifier
 
 import (
 	"context"
+
+	"github.com/ozoncp/ocp-lib/pkg/tasks"
 )
 
 // Notifier
