@@ -8,6 +8,7 @@ import (
 	"github.com/ozoncp/ocp-task-api/internal/repo"
 )
 
+// Flusher - интерфейс для сброса задач в хранилище
 type Flusher interface {
 	Flush(ctx context.Context, tasks []models.Task) []models.Task
 }
