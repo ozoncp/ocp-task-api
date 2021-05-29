@@ -33,6 +33,8 @@ type flusher struct {
 
 func (f *flusher) Flush(ctx context.Context, tasks []models.Task) []models.Task {
 
+	var t = 0
+
 	for i := 0; i < len(tasks); i += f.chunkSize {
 		j := i + f.chunkSize
 		if j >= len(tasks) {
