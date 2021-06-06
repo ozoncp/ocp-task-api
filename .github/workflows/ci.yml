@@ -15,8 +15,8 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: '1.16.3'
-        run: go test -gcflags=-l -coverprofile=cover.out ./...
-        run: go tool cover -func=cover.out
+      - run: go test -gcflags=-l -coverprofile=cover.out ./...
+      - run: go tool cover -func=cover.out
 
   golangci:
     name: lint
