@@ -3,6 +3,7 @@ build: vendor-proto .generate .build
 
 PHONY: .generate
 .generate:
+		mkdir -p swagger
 		mkdir -p pkg/ocp-task-api
 		protoc -I vendor.protogen \
 				--go_out=pkg/ocp-task-api --go_opt=paths=import \
@@ -11,7 +12,7 @@ PHONY: .generate
 				--grpc-gateway_opt=logtostderr=true \
 				--grpc-gateway_opt=paths=import \
 				--validate_out lang=go:pkg/ocp-task-api \
-				--swagger_out=allow_merge=true,merge_file_name=api:. \
+				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
 				api/ocp-task-api/ocp-task-api.proto
 		mv pkg/ocp-task-api/gihtub.com/ozoncp/ocp-task-api/pkg/ocp-task-api/* pkg/ocp-task-api/
 		rm -rf pkg/ocp-task-api/gihtub.com
