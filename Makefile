@@ -14,8 +14,8 @@ PHONY: .generate
 				--validate_out lang=go:pkg/ocp-task-api \
 				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
 				api/ocp-task-api/ocp-task-api.proto
-		mv pkg/ocp-task-api/gihtub.com/ozoncp/ocp-task-api/pkg/ocp-task-api/* pkg/ocp-task-api/
-		rm -rf pkg/ocp-task-api/gihtub.com
+		mv pkg/ocp-task-api/github.com/ozoncp/ocp-task-api/pkg/ocp-task-api/* pkg/ocp-task-api/
+		rm -rf pkg/ocp-task-api/github.com
 		mkdir -p cmd/ocp-task-api
 
 PHONY: .build
@@ -63,8 +63,4 @@ install-go-deps: .install-go-deps
 		go get -u github.com/golang/protobuf/protoc-gen-go
 		go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc
-		tmpdir=$$(mktemp -d); cd $$tmpdir && export GO111MODULE=off \
-		  && go get -d github.com/envoyproxy/protoc-gen-validate \
-			&& cd $$GOPATH/src/github.com/envoyproxy/protoc-gen-validate && git checkout v0.1.0 \
-			&& go build -o $$GOPATH/bin/protoc-gen-validate $$GOPATH/src/github.com/envoyproxy/protoc-gen-validate/main.go \
-			&& cd -
+		go install github.com/envoyproxy/protoc-gen-validate
