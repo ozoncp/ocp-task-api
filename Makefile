@@ -13,8 +13,7 @@ PHONY: .generate
 				--grpc-gateway_opt=paths=import \
 				--validate_out lang=go:pkg/ocp-task-api \
 				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
-				api/ocp-task-api/ocp-task-api.proto \
-				api/ocp-problem-api/ocp-problem-api.proto
+				api/ocp-task-api/ocp-task-api.proto
 		mv pkg/ocp-task-api/github.com/ozoncp/ocp-task-api/pkg/ocp-task-api/* pkg/ocp-task-api/
 		rm -rf pkg/ocp-task-api/github.com
 		mkdir -p cmd/ocp-task-api
