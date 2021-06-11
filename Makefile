@@ -1,7 +1,7 @@
 .PHONY: build
 build: vendor-proto .generate .build
 
-PHONY: .generate
+.PHONY: .generate
 .generate:
 		mkdir -p swagger
 		mkdir -p pkg/ocp-task-api
@@ -18,21 +18,21 @@ PHONY: .generate
 		rm -rf pkg/ocp-task-api/github.com
 		mkdir -p cmd/ocp-task-api
 
-PHONY: .build
+.PHONY: .build
 .build:
 		CGO_ENABLED=0 GOOS=linux go build -o bin/ocp-task-api cmd/ocp-task-api/main.go
 
-PHONY: install
+.PHONY: install
 install: build .install
 
-PHONY: .install
+.PHONY: .install
 install:
 		go install cmd/grpc-server/main.go
 
-PHONY: vendor-proto
+.PHONY: vendor-proto
 vendor-proto: .vendor-proto
 
-PHONY: .vendor-proto
+.PHONY: .vendor-proto
 .vendor-proto:
 		mkdir -p vendor.protogen
 		mkdir -p vendor.protogen/api/ocp-task-api
