@@ -29,6 +29,7 @@ service OcpTaskApi {
     rpc CreateTaskV1(CreateTaskV1Request) returns (CreateTaskV1Response) {
         option (google.api.http) = {
             post: "/v1/tasks"
+            body: "*"
         };
     }
 
@@ -50,8 +51,8 @@ message ListTasksV1Response {
 }
 
 message CreateTaskV1Request {
-    string description = 2;
-    TaskDifficulty difficulty = 3;
+    string description = 1;
+    TaskDifficulty difficulty = 2;
 }
 
 message CreateTaskV1Response {
@@ -59,7 +60,7 @@ message CreateTaskV1Response {
 }
 
 message RemoveTaskV1Request {
-		uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
+    uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
 message RemoveTaskV1Response {
@@ -67,7 +68,7 @@ message RemoveTaskV1Response {
 }
 
 message DescribeTaskV1Request {
-		uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
+    uint64 task_id = 1 [(validate.rules).uint64.gt = 0];
 }
 
 message DescribeTaskV1Response {
